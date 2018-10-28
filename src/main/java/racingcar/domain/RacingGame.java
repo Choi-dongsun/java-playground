@@ -2,20 +2,33 @@ package racingcar.domain;
 
 import racingcar.dto.RacingGameDto;
 import racingcar.utils.RandomValueGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class RacingGame {
-    private int carNum;
-    private List<Car> carPositions = new ArrayList<>();
+    public static final String COMMA_SEPARATOR = ",";
+    private List<Car> cars = new ArrayList<>();
 
-    public RacingGame(int carNum) {
-        this.carNum = carNum;
-        for (int i = 0; i < carNum ; i++) carPositions.add(new Car(0));
+    private RacingGame(String carName) throws NullPointerException {
+        if (carName.isEmpty() || carName == null) {
+            throw new NullPointerException("자동차 이름은 빈칸이 될 수 없습니다.");
+        }
+
+        String[] carNames = carName.split(COMMA_SEPARATOR);
+        for (String car : carNames) {
+            cars.add(Car.ofName(car));
+        }
     }
 
-    public RacingGameDto racing(int count) {
+    public static RacingGame ofcarName(String carName) {
+        return new RacingGame(carName);
+    }
+
+    public RacingGameDto race(int count) throws IllegalArgumentException {
+        if (count < 1) {
+            throw new IllegalArgumentException("최소 1회는 실시해야 합니다.");
+        }
+
         for (int i = 0; i < count; i++) {
             moveCar();
         }
@@ -23,15 +36,15 @@ public class RacingGame {
     }
 
     private void moveCar() {
-        for (Car car : carPositions) {
-            car.movePosition(RandomValueGenerator.generateRandonNum());
+        for (Car car : cars) {
+            car.movePosition(RandomValueGenerator.generateRandomNum());
         }
     }
 
     public RacingGameDto RacingGameDto() {
-        RacingGameDto result = new RacingGameDto();
-        for (Car car : carPositions) {
-            result.setCarPositions(car.CarDto());
+        RacingGameDto result = RacingGameDto.of();
+        for (Car car : cars) {
+            result.setCars(car.CarDto());
         }
         return result;
     }

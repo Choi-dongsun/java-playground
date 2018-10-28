@@ -3,8 +3,13 @@ package racingcar.utils;
 import java.util.Random;
 
 public class RandomValueGenerator {
-    public static int generateRandonNum() {
+    private static final int RANGE = 10;
+
+    private RandomValueGenerator() {
+    }
+
+    public static int generateRandomNum() {
         Random rnd = new Random();
-        return rnd.nextInt(10);
+        return rnd.nextInt(RANGE);
     }
 }
