@@ -23,25 +23,19 @@ public class RacingGameDto {
 
     public static int setMaxPosition(List<CarDto> cars) {
         int maxPosition = 0;
-        for (CarDto car : cars) {
-            if(car.getPosition() > maxPosition) maxPosition = car.getPosition();
-        }
+        for (CarDto car : cars) if(car.getPosition() > maxPosition) maxPosition = car.getPosition();
         return maxPosition;
     }
 
     public static List<CarDto> getWinners(int maxPosition, List<CarDto> cars) {
         List<CarDto> winners = new ArrayList<>();
-        for (CarDto car : cars) {
-            if (car.getPosition() == maxPosition) winners.add(car);
-        }
+        for (CarDto car : cars) if (car.getPosition() == maxPosition) winners.add(car);
         return winners;
     }
 
     public static String getWinnerNames(List<CarDto> cars) {
         List<String> winnerNames = new ArrayList<>();
-        for (CarDto winner : getWinners(setMaxPosition(cars), cars)) {
-            winnerNames.add(winner.getName());
-        }
+        for (CarDto winner : getWinners(setMaxPosition(cars), cars)) winnerNames.add(winner.getName());
         return String.join(RacingGame.COMMA_SEPARATOR, winnerNames);
     }
 }

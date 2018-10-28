@@ -10,14 +10,10 @@ public class RacingGame {
     private List<Car> cars = new ArrayList<>();
 
     private RacingGame(String carName) throws NullPointerException {
-        if (carName.isEmpty() || carName == null) {
-            throw new NullPointerException("자동차 이름은 빈칸이 될 수 없습니다.");
-        }
+        if (carName.isEmpty() || carName == null) throw new NullPointerException("자동차 이름은 빈칸이 될 수 없습니다.");
 
         String[] carNames = carName.split(COMMA_SEPARATOR);
-        for (String car : carNames) {
-            cars.add(Car.ofName(car));
-        }
+        for (String car : carNames) cars.add(Car.ofName(car));
     }
 
     public static RacingGame ofcarName(String carName) {
@@ -25,27 +21,19 @@ public class RacingGame {
     }
 
     public RacingGameDto race(int count) throws IllegalArgumentException {
-        if (count < 1) {
-            throw new IllegalArgumentException("최소 1회는 실시해야 합니다.");
-        }
+        if (count < 1) throw new IllegalArgumentException("최소 1회는 실시해야 합니다.");
 
-        for (int i = 0; i < count; i++) {
-            moveCar();
-        }
+        for (int i = 0; i < count; i++) moveCar();
         return RacingGameDto();
     }
 
     private void moveCar() {
-        for (Car car : cars) {
-            car.movePosition(RandomValueGenerator.generateRandomNum());
-        }
+        for (Car car : cars) car.movePosition(RandomValueGenerator.generateRandomNum());
     }
 
     public RacingGameDto RacingGameDto() {
         RacingGameDto result = RacingGameDto.of();
-        for (Car car : cars) {
-            result.setCars(car.CarDto());
-        }
+        for (Car car : cars) result.setCars(car.CarDto());
         return result;
     }
 }
