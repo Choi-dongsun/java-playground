@@ -31,7 +31,7 @@ public class RacingGame {
         for (Car car : cars) car.movePosition(RandomValueGenerator.generateRandomNum());
     }
 
-    public RacingGameDto RacingGameDto() {
+    private RacingGameDto RacingGameDto() {
         RacingGameDto result = RacingGameDto.of();
         for (Car car : cars) result.setCars(car.CarDto());
         return result;
